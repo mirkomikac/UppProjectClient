@@ -8,14 +8,17 @@ import { AppRoutingModule} from './app-routing/app-routing.module'
 import { AppComponent } from './app.component';
 import { LoginComponent } from './login/login.component';
 import { RegisterComponent } from './register/register.component';
+import { TasksComponent } from './tasks/tasks.component';
 
 import { UserService } from '../app/service/user.service';
+import { TasksService } from '../app/service/tasks.service';
 
 @NgModule({
   declarations: [
     AppComponent,
     LoginComponent,
-    RegisterComponent
+    RegisterComponent,
+    TasksComponent
   ],
   imports: [
     BrowserModule,
@@ -24,7 +27,8 @@ import { UserService } from '../app/service/user.service';
     AppRoutingModule
   ],
   providers: [
-    UserService
+    UserService,
+    TasksService
   ],
   bootstrap: [AppComponent]
 })

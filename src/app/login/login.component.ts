@@ -2,6 +2,7 @@ import { Component, OnInit } from '@angular/core';
 
 import { User } from "../../app/shared/User";
 import { UserService } from '../service/user.service';
+import { userType } from '../shared/UserType';
 
 
 @Component({
@@ -13,7 +14,14 @@ export class LoginComponent implements OnInit {
 
   user : User = {
     username : "",
-    password : ""
+    password : "",
+    email: "",
+    name: "",
+    address: "",
+    city: "",
+    country: "",
+    zipCode: "",
+    userType: 0
   };
 
   constructor(private userService : UserService) { }

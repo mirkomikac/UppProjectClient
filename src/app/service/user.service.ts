@@ -11,4 +11,8 @@ export class UserService {
     return this.http.post("/api/users/login", user).toPromise();
   }
 
+  startRegisterProcess(){
+    return this.http.get("/api/users/register").toPromise();
+  }
+
 }

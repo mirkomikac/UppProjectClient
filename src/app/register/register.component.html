@@ -3,11 +3,17 @@
 <script src="//code.jquery.com/jquery-1.11.1.min.js"></script>
 <!------ Include the above in your HEAD tag ---------->
 
+<div [hidden] = "!started">
+  <span>Process started!</span>
+  <button><a [routerLink]="['/tasks']"> Tasks </a></button>
+</div>
+
 <form class="form-horizontal" action='' method="POST">
   <fieldset>
     <div id="legend">
       <legend class="">Register</legend>
     </div>
+   
     <div class="control-group">
       <!-- Username -->
       <label class="control-label"  for="username">Username</label>
@@ -41,6 +47,64 @@
       <div class="controls">
         <input type="password" id="password_confirm" name="password_confirm" placeholder="" class="input-xlarge">
         <p class="help-block">Please confirm password</p>
+      </div>
+    </div>
+
+    <div class="control-group">
+      <!-- Username -->
+      <label class="control-label"  for="name">Name</label>
+      <div class="controls">
+        <input type="text" id="name" name="name" placeholder="" class="input-xlarge">
+        <p class="help-block">Name can contain any letters</p>
+      </div>
+    </div>
+ 
+    <div class="control-group">
+      <!-- Username -->
+      <label class="control-label"  for="address">Address</label>
+      <div class="controls">
+        <input type="text" id="address" name="address" placeholder="" class="input-xlarge">
+        <p class="help-block">address</p>
+      </div>
+    </div>
+  
+    <div class="control-group">
+      <!-- Username -->
+      <label class="control-label"  for="city">City</label>
+      <div class="controls">
+        <input type="text" id="city" name="city" placeholder="" class="input-xlarge">
+        <p class="help-block">city</p>
+      </div>
+    </div>
+ 
+ 
+    <div class="control-group">
+      <!-- Username -->
+      <label class="control-label"  for="country">Country</label>
+      <div class="controls">
+        <input type="text" id="country" name="country" placeholder="" class="input-xlarge">
+        <p class="help-block">country</p>
+      </div>
+    </div> 
+ 
+    <div class="control-group">
+      <!-- Username -->
+      <label class="control-label"  for="zipCode">Zip code</label>
+      <div class="controls">
+        <input type="text" id="zipCode" name="zipCode" placeholder="" class="input-xlarge">
+        <p class="help-block">zipCode</p>
+      </div>
+    </div>
+
+    <div class="control-group">
+      <!-- Username -->
+      <label class="control-label"  for="userType">User type</label>
+      <div class="controls">
+        <select id="userType" name="userType" class="input-xlarge">
+          <option>Natural person</option>
+          <option>Legal person</option>
+        </select>
+        <p class="help-block">userType</p>
       </div>
     </div>
  
