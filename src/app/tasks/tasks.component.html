@@ -1,9 +1,7 @@
-<p>
-  tasks works!
-</p>
-<div *ngFor="let userTask of userTasks">
+<button (click)="startAuction()">Start auction</button>
+<div *ngFor="let userTask of userTasks; let taskIndex = index">
   <div *ngFor="let property of userTask?.properties">
-      {{property?.name}} <input type="text" id="property.id">
+      {{property?.name}} <input type="text" id="property.id" [(ngModel)] = "property.value">
   </div>
+  <button (click)="completeTask(taskIndex)">Complete task</button>
 </div>
-<button>dddd</button>

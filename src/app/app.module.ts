@@ -13,6 +13,7 @@ import { TasksComponent } from './tasks/tasks.component';
 
 import { UserService } from '../app/service/user.service';
 import { TasksService } from '../app/service/tasks.service';
+import { OffersService } from './service/offers.service';
 
 @NgModule({
   declarations: [
@@ -30,7 +31,8 @@ import { TasksService } from '../app/service/tasks.service';
   ],
   providers: [
     UserService,
-    TasksService
+    TasksService,
+    OffersService
   ],
   bootstrap: [AppComponent]
 })
