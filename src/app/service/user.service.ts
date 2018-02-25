@@ -15,4 +15,8 @@ export class UserService {
     return this.http.get("/api/users/register").toPromise();
   }
 
+  stopRegisterProcess(processInstanceId : string){
+    return this.http.get("/api/users/registerStop?processInstanceId=" + processInstanceId).toPromise();
+  }
+
 }

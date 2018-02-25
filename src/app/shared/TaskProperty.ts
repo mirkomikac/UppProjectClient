@@ -5,7 +5,8 @@ export class TaskProperty{
     readable: boolean;
     writable: boolean;
     required: boolean;
-    values : Map<string, string>
+    values : Map<string, string>;
+    type : string;
 
     
     public constructor(){

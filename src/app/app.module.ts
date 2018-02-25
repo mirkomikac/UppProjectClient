@@ -2,6 +2,7 @@ import { BrowserModule } from '@angular/platform-browser';
 import { NgModule } from '@angular/core';
 import { FormsModule } from '@angular/forms';
 import { HttpModule } from '@angular/http';
+import { ModalModule } from 'ngx-bootstrap/modal';
 
 import { AppRoutingModule} from './app-routing/app-routing.module'
 
@@ -24,7 +25,8 @@ import { TasksService } from '../app/service/tasks.service';
     BrowserModule,
     FormsModule,
     HttpModule,
-    AppRoutingModule
+    AppRoutingModule,
+    ModalModule.forRoot(),
   ],
   providers: [
     UserService,

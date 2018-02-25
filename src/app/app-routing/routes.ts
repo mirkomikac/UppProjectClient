@@ -7,6 +7,6 @@ import { TasksComponent } from "../tasks/tasks.component";
 export const routes: Routes = 
 [
     { path: 'login', component: LoginComponent},
-    { path: 'register', component: RegisterComponent},
+    { path: 'register', component: RegisterComponent },     
     { path: 'tasks', component: TasksComponent}
 ]
