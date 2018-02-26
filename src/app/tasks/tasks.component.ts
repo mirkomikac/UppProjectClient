@@ -12,26 +12,60 @@ import { Router } from '@angular/router';
 })
 export class TasksComponent implements OnInit {
 
-  private userTasks: UserTask[];
-
+  private userTasks: UserTask[] = new Array();
+  private selectedTask:UserTask = null;
 
   constructor(private tasksService: TasksService, private offersService: OffersService, private userService: UserService, private router: Router) { }
 
   ngOnInit() {
-    this.tasksService.getUserTasks().then(ut => this.userTasks = ut);
+    this.tasksService.getUserTasks().then(ut => {
+      if(ut !== null) {
+        this.userTasks = ut;
+      }
+    });
   }
 
   startAuction() {
-    this.offersService.startAuction();
-    this.tasksService.getUserTasks().then(ut => this.userTasks = ut);
+    this.offersService.startAuction().then(()=>{
+      this.checkForNewTasks();
+    });
   }
 
-  completeTask(index: number) {
-    console.log(this.userTasks[index])
-    this.tasksService.completeTask(this.userTasks[index]).then(response => {
-      this.userTasks.splice(0, this.userTasks.length);
-      this.tasksService.getUserTasks().then(tasks => this.userTasks = tasks);
+  completeTask() {
+    this.tasksService.completeTask(this.selectedTask).then(response => {
+      this.checkForNewTasks();
     });
+    this.userTasks.splice(this.userTasks.indexOf(this.selectedTask), 1);
+    this.selectedTask = null;
+  }
+
+  setSelectedTask(userTask: UserTask) {
+    this.selectedTask = userTask;
+  }
+
+  getCreationTime(creationTime: number) {
+    let date: Date = new Date(creationTime);
+    return date.getDate() + '.' + date.getMonth() + '.' + date.getFullYear() + '. ' + date.getHours() + ':' + date.getMinutes() + ':' + date.getSeconds();
+  }
+
+  checkForNewTasks() {
+    this.tasksService.getUserTasks().then((newUserTasks) => {
+      newUserTasks.forEach((newUserTask) => {
+        if(!this.doesTaskExist(newUserTask.id)){
+          this.userTasks.push(newUserTask);
+        }
+      });
+    })
+  }
+
+  doesTaskExist(newUserTaskId: string): boolean {
+    for(let i = 0; i < this.userTasks.length; i++){
+      let userTask: UserTask = this.userTasks[i];
+      if(userTask.id === newUserTaskId) {
+        return true;
+      }
+    }
+    return false;
   }
 
   logout(){

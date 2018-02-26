@@ -13,10 +13,82 @@
   </ul>
 </nav>
 
-<button (click)="startAuction()">Start auction</button>
-<div *ngFor="let userTask of userTasks; let taskIndex = index">
-  <div *ngFor="let property of userTask?.properties">
-      {{property?.name}} <input type="text" id="property.id" [(ngModel)] = "property.value">
+<div> <br/>
+  <div class="row">
+    <div class="col-3">
+      <div class="list-group">
+        <a [ngClass]="{'list-group-item': true, 'active': userTask === selectedTask}" *ngFor="let userTask of userTasks" (click)="setSelectedTask(userTask)">
+          <h4 class="list-group-item-heading">{{userTask.name}}</h4>
+          <i class="small">[Process_ID = {{userTask.processInstanceId}}]</i>
+          <p class="list-group-item-text">Task description</p>
+        </a>
+      </div>
+    </div>
+    <div class="col-9">
+      <button class = "btn btn-light pull-right" (click)="startAuction()">New auction</button>
+      <div class="panel panel-default" *ngIf="selectedTask !== null">
+        <div class="panel-heading">
+          <h3 class="panel-title">{{selectedTask.name}}</h3>
+          <div *ngIf="selectedTask.dueDate !== null;else noDueDate">
+            <label><b>Due date: </b>{{selectedTask.dueDate}}</label>
+          </div> &nbsp;
+          <label><b>Creation time: </b>{{getCreationTime(selectedTask.creationTime)}}</label>
+        </div>
+        <div class="panel-body">
+          <hr/>
+            <p *ngIf="selectedTask.description !== null;else noDescription">{{selectedTask.description}}</p>
+          <hr/>
+
+          <h4>People</h4>
+          <div class = "row">
+            <div class="col-3">
+              <div *ngIf="selectedTask.owner !== null;else noOwner">
+                <h6>Owner</h6>
+                <i>{{selectedTask.owner}}</i>            
+              </div>
+            </div>
+            <div class="col-3">
+              <div *ngIf="selectedTask.assignee !== null;else noAssignee">
+                <h6>Assignee</h6>
+                <i>{{selectedTask.assignee}}</i>            
+              </div>
+            </div>
+          </div>
+          <hr/>
+
+          <div>
+            <h4>Preview data</h4>
+            <p>
+              If task have some informations like rank list that shoud be presented here.
+            </p>
+            <hr/>
+          </div>
+
+          <div class="form-group" *ngFor="let property of selectedTask?.properties">
+            <label for="property">{{property?.name}}</label>
+            <input class="form-control" type="text" id="property.id" [(ngModel)]="property.value">
+          </div>
+          <button class="btn btn-success" (click)="completeTask()">Complete task</button>
+        </div>
+      </div>
+    </div>
   </div>
-  <button (click)="completeTask(taskIndex)">Complete task</button>
 </div>
+
+<ng-template #noDueDate>
+  <label><b>Due date: </b>No due date.</label>
+</ng-template>
+
+<ng-template #noDescription>
+  <p>This task has no description set.</p>
+</ng-template>
+
+<ng-template #noOwner>
+  <h6>Owner</h6>
+  <i>No owner set.</i>
+</ng-template>
+
+<ng-template #noAssignee>
+  <h6>Owner</h6>
+  <i>No assignee set.</i>
+</ng-template>

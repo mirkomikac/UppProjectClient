@@ -8,7 +8,7 @@ export class OffersService {
   constructor(private http: Http) { }
 
   startAuction() {
-    this.http.get("/api/offers/startAuction").toPromise().catch(this.handleError);
+    return this.http.get("/api/offers/startAuction").toPromise().catch(this.handleError);
   }
 
   private handleError(error: any): Promise<any>{
