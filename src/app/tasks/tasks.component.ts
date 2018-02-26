@@ -2,6 +2,8 @@ import { Component, OnInit } from '@angular/core';
 import { TasksService } from '../service/tasks.service';
 import { UserTask } from '../shared/UserTask';
 import { OffersService } from '../service/offers.service';
+import { UserService } from '../service/user.service';
+import { Router } from '@angular/router';
 
 @Component({
   selector: 'app-tasks',
@@ -12,7 +14,8 @@ export class TasksComponent implements OnInit {
 
   private userTasks: UserTask[];
 
-  constructor(private tasksService: TasksService, private offersService: OffersService) { }
+
+  constructor(private tasksService: TasksService, private offersService: OffersService, private userService: UserService, private router: Router) { }
 
   ngOnInit() {
     this.tasksService.getUserTasks().then(ut => this.userTasks = ut);
@@ -20,6 +23,7 @@ export class TasksComponent implements OnInit {
 
   startAuction() {
     this.offersService.startAuction();
+    this.tasksService.getUserTasks().then(ut => this.userTasks = ut);
   }
 
   completeTask(index: number) {
@@ -28,6 +32,11 @@ export class TasksComponent implements OnInit {
       this.userTasks.splice(0, this.userTasks.length);
       this.tasksService.getUserTasks().then(tasks => this.userTasks = tasks);
     });
+  }
+
+  logout(){
+    this.userService.logout();
+    this.router.navigate(['/login']);
   }
 
 }
