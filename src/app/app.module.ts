@@ -6,6 +6,8 @@ import { ModalModule } from 'ngx-bootstrap/modal';
 
 import { AppRoutingModule} from './app-routing/app-routing.module'
 
+import { HttpClientModule, HTTP_INTERCEPTORS } from '@angular/common/http';
+
 import { AppComponent } from './app.component';
 import { LoginComponent } from './login/login.component';
 import { RegisterComponent } from './register/register.component';
@@ -14,6 +16,7 @@ import { TasksComponent } from './tasks/tasks.component';
 import { UserService } from '../app/service/user.service';
 import { TasksService } from '../app/service/tasks.service';
 import { OffersService } from './service/offers.service';
+import { AuthenticationInterceptor } from './security/authentication-interceptor';
 
 @NgModule({
   declarations: [
@@ -28,11 +31,17 @@ import { OffersService } from './service/offers.service';
     HttpModule,
     AppRoutingModule,
     ModalModule.forRoot(),
+    HttpClientModule
   ],
   providers: [
     UserService,
     TasksService,
-    OffersService
+    OffersService,
+    { 
+      provide: HTTP_INTERCEPTORS, 
+      useClass: AuthenticationInterceptor, 
+      multi: true 
+  } 
   ],
   bootstrap: [AppComponent]
 })

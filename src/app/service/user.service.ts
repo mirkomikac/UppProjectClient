@@ -1,14 +1,15 @@
 import { Injectable } from '@angular/core';
 import { User } from '../shared/User';
 import { Http } from '@angular/http';
+import { HttpClient } from '@angular/common/http';
 
 @Injectable()
 export class UserService {
 
-  constructor(private http : Http) { }
+  constructor(private http : HttpClient) { }
 
   login(user : User) : Promise<User>{
-    return this.http.post("/api/users/login", user).toPromise().then(data => data.json() as User).catch(this.handleError);
+    return this.http.post<User>("/api/users/login", user).toPromise().catch(this.handleError);
   }
 
   logout(){

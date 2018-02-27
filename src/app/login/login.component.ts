@@ -37,7 +37,9 @@ export class LoginComponent implements OnInit {
           if(data.username != null && data.username != "")
           this.router.navigate(['/tasks']);
         } 
-        alert('Authenticated');
+        else {
+          alert('Unauthenticated');
+        }
      }).catch(data => {
         alert('Unauthenticated');
      })

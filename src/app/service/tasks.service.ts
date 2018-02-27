@@ -1,14 +1,14 @@
 import { Injectable } from '@angular/core';
-import { Http } from '@angular/http';
 import { UserTask } from '../shared/UserTask';
+import { HttpClient } from '@angular/common/http';
 
 @Injectable()
 export class TasksService {
 
-  constructor(private http: Http) { }
+  constructor(private http: HttpClient) { }
 
   getUserTasks(): Promise<UserTask[]>{
-    return this.http.get("/api/tasks").toPromise().then(response => response.json() as UserTask[]).catch(this.handleError);
+    return this.http.get<UserTask[]>("/api/tasks").toPromise().catch(this.handleError);
   }
 
   completeTask(userTask: UserTask){

@@ -1,11 +1,11 @@
 import { Injectable } from '@angular/core';
-import { Http } from '@angular/http';
 import { UserTask } from '../shared/UserTask';
+import { HttpClient } from '@angular/common/http';
 
 @Injectable()
 export class OffersService {
 
-  constructor(private http: Http) { }
+  constructor(private http: HttpClient) { }
 
   startAuction() {
     return this.http.get("/api/offers/startAuction").toPromise().catch(this.handleError);
