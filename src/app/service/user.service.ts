@@ -2,6 +2,7 @@ import { Injectable } from '@angular/core';
 import { User } from '../shared/User';
 import { Http } from '@angular/http';
 import { HttpClient } from '@angular/common/http';
+import { UserTask } from '../shared/UserTask';
 
 @Injectable()
 export class UserService {
@@ -22,6 +23,14 @@ export class UserService {
 
   stopRegisterProcess(processInstanceId : string){
     return this.http.get("/api/users/registerStop?processInstanceId=" + processInstanceId).toPromise();
+  }
+
+  completeTask(userTask: UserTask){
+    return this.http.post("/api/users/complete", userTask).toPromise();
+  }
+
+  getUserTasks(): Promise<UserTask[]>{
+    return this.http.get<UserTask[]>("/api/users/getTasks").toPromise().catch(this.handleError);
   }
 
   private handleError(error: any): Promise<any>{

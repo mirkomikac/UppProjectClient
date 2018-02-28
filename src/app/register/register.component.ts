@@ -2,7 +2,6 @@ import { Component, OnInit, ViewChild, AfterViewInit, OnChanges, HostListener } 
 
 import { User } from '../shared/User';
 import { UserService } from '../service/user.service';
-import { TasksService } from '../service/tasks.service';
 
 import { Router } from '@angular/router';
 import { UserTask } from '../shared/UserTask';
@@ -39,14 +38,14 @@ export class RegisterComponent implements OnInit {
 
   started: boolean = false;
 
-  constructor(private userService: UserService, private tasksService: TasksService, private router: Router) { }
+  constructor(private userService: UserService, private router: Router) { }
 
   ngOnInit() { 
     this.startProcess();
   }
 
   public startProcess(){
-    this.userService.startRegisterProcess().then(data => { this.tasksService.getUserTasks().then(data => { this.userTasks = data, this.processId = data[0].processInstanceId }).catch(this.handleError); });
+    this.userService.startRegisterProcess().then(data => { this.userService.getUserTasks().then(data => { this.userTasks = data, this.processId = data[0].processInstanceId }).catch(this.handleError); });
     this.started = true;
   }
 
@@ -71,7 +70,7 @@ export class RegisterComponent implements OnInit {
       });
       }
     }
-    this.tasksService.completeTask(this.userTasks[0]).then(data => { console.log('Uspesno izvrsena registracija!'); alert('Uspesno izvrsena registracija'); });
+    this.userService.completeTask(this.userTasks[0]).then(data => { console.log('Uspesno izvrsena registracija!'); alert('Uspesno izvrsena registracija'); });
   }
 
 }
