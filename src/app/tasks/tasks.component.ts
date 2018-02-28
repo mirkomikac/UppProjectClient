@@ -15,6 +15,8 @@ export class TasksComponent implements OnInit {
   private userTasks: UserTask[] = new Array();
   private selectedTask:UserTask = null;
 
+  objectKeys = Object.keys;
+
   constructor(private tasksService: TasksService, private offersService: OffersService, private userService: UserService, private router: Router) { }
 
   ngOnInit() {
@@ -32,6 +34,19 @@ export class TasksComponent implements OnInit {
   }
 
   completeTask() {
+    for (let prop of this.selectedTask.properties) {
+      if(prop.type == 'enum'){
+        Object.keys(prop.values).forEach((key: string) => {
+          if(prop.values[key] == prop.value){
+            prop.value = key;
+          }
+      });
+      } else if(prop.type == 'boolean'){
+        if(prop.value == null){
+          prop.value = "false";
+        }
+      }
+    }
     this.tasksService.completeTask(this.selectedTask).then(response => {
       this.checkForNewTasks();
     });

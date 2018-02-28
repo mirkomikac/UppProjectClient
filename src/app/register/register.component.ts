@@ -40,18 +40,20 @@ export class RegisterComponent implements OnInit {
 
   constructor(private userService: UserService, private router: Router) { }
 
-  ngOnInit() { 
-    this.startProcess();
+  ngOnInit() {
+    this.userService.getLoggedUser().then(data => {
+      if(data != null){
+        this.router.navigate(['/tasks']);
+      } else {
+        this.startProcess();
+      }
+    }).catch(this.handleError);
+    
   }
 
   public startProcess(){
     this.userService.startRegisterProcess().then(data => { this.userService.getUserTasks().then(data => { this.userTasks = data, this.processId = data[0].processInstanceId }).catch(this.handleError); });
     this.started = true;
-  }
-
-  private handleError(error: any): Promise<any>{
-    console.error("An error occured: ", error);
-    return Promise.reject(error.message || error);
   }
 
   @HostListener('window:beforeunload')
@@ -73,4 +75,8 @@ export class RegisterComponent implements OnInit {
     this.userService.completeTask(this.userTasks[0]).then(data => { console.log('Uspesno izvrsena registracija!'); alert('Uspesno izvrsena registracija'); });
   }
 
+  private handleError(error: any): Promise<any>{
+    console.error("An error occured: ", error);
+    return Promise.reject(error.message || error);
+  }
 }

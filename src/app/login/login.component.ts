@@ -29,7 +29,13 @@ export class LoginComponent implements OnInit {
 
   constructor(private userService : UserService, private router : Router) { }
 
-  ngOnInit() { }
+  ngOnInit() {
+    this.userService.getLoggedUser().then(data => {
+      if(data != null){
+        this.router.navigate(['/tasks']);
+      }
+    }).catch(this.handleError);
+  }
 
   login() {
      this.userService.login(this.user).then(data => {
@@ -45,4 +51,8 @@ export class LoginComponent implements OnInit {
      })
   }
 
+  private handleError(error: any): Promise<any>{
+    console.error("An error occured: ", error);
+    return Promise.reject(error.message || error);
+  }
 }

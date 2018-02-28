@@ -9,12 +9,17 @@ export class UserService {
 
   constructor(private http : HttpClient) { }
 
+
   login(user : User) : Promise<User>{
     return this.http.post<User>("/api/users/login", user).toPromise().catch(this.handleError);
   }
 
   logout(){
     this.http.get("/api/users/logout").toPromise().catch(this.handleError);
+  }
+
+  getLoggedUser() : Promise<User>{
+    return this.http.get<User>("/api/users/getLoggedUser").toPromise().catch(this.handleError);
   }
 
   startRegisterProcess(){
