@@ -23,6 +23,16 @@ export class TasksComponent implements OnInit {
     this.tasksService.getUserTasks().then(ut => {
       if(ut !== null) {
         this.userTasks = ut;
+        ut.forEach(ut =>
+        {
+          ut.properties.forEach(prop =>
+          {
+            if(prop.type == 'listOffer'){
+              prop.list = JSON.parse(prop.value);
+            }  
+          });
+        }
+        );
       }
     });
   }
@@ -67,6 +77,12 @@ export class TasksComponent implements OnInit {
     this.tasksService.getUserTasks().then((newUserTasks) => {
       newUserTasks.forEach((newUserTask) => {
         if(!this.doesTaskExist(newUserTask.id)){
+          newUserTask.properties.forEach(prop =>
+            {
+              if(prop.type == 'listOffer'){
+                prop.list = JSON.parse(prop.value);
+              }  
+            });
           this.userTasks.push(newUserTask);
         }
       });

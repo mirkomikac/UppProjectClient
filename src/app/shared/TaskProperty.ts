@@ -1,3 +1,5 @@
+import { Offer } from "./Offer";
+
 export class TaskProperty{
     id: string;
     name: string;
@@ -7,6 +9,7 @@ export class TaskProperty{
     required: boolean;
     values : Map<string, string>;
     type : string;
+    list: Offer[];
 
     
     public constructor(){

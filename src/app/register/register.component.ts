@@ -72,7 +72,16 @@ export class RegisterComponent implements OnInit {
       });
       }
     }
-    this.userService.completeTask(this.userTasks[0]).then(data => { console.log('Uspesno izvrsena registracija!'); alert('Uspesno izvrsena registracija'); });
+    this.userService.completeTask(this.userTasks[0]).then(data => { 
+      this.userService.getUserTasks().then(data => {
+        this.userTasks = data;
+        if(this.userTasks == null || this.userTasks.length == 0){
+          this.router.navigate(['/login']);
+        }
+      }).catch(data => {console.log('Nije pravno lice');
+        
+      }); 
+      console.log('Uspesno izvrsena registracija!'); alert('Uspesno izvrsena registracija'); });
   }
 
   private handleError(error: any): Promise<any>{
